@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang = 'en'>
+<head>
+	<meta charset = 'utf-8' />
+	<title>Culinomicon</title>
+	<!--82924643-7584-4170-8311-34f32c40846c-->
+	<link type = 'text/css' rel = 'stylesheet' href = 'https://unpkg.com/bootstrap/dist/css/bootstrap.min.css'/>
+	<link type = 'text/css' rel = 'stylesheet' href = 'https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css'/>
+	
+	<link type = 'text/css' rel = 'stylesheet' href = 'style/theme.css'/>	
+</head>
+<body>
+	<div id = 'app'>
+		<b-navbar toggleable = 'md' type = 'dark' variant = 'dark' sticky>
+			<b-navbar-brand href = 'culinarian.html'>{{title}}</b-navbar-brand>
+			<b-navbar-nav>
+				<b-nav-item href = 'culibase.html'>Statistics</b-nav-item>
+			</b-navbar-nav>
+		</b-navbar>
+		<b-jumbotron :header = 'title'></b-jumbotron>		
+
+		<div class = 'container'>
+			<div class = 'row search-row'>
+				<div class = 'col-md-12'>
+					<span class = 'input-group'>
+						<input class = 'form-control' v-model = 'query' v-on:keyup.enter = 'search' placeholder = 'Enter Dish'>
+						<button class = 'btn btn-outline-dark' type = 'submit' @click = 'search'>Search</button>
+						<button class = 'btn btn-outline-dark' v-b-toggle = "'advOptions'">&#x26ED;</button>
+					</span>
+					<!-- Show Advance Options -->
+					<b-collapse id = 'advOptions'>
+						<b-card>
+							<p>Searching 
+								<span v-if = 'results == -1'>All</span>
+								<span v-else>{{results}}</span> 
+							results by {{ picked }}, sorted by {{sortBy}}</p>
+							
+							<select v-model = 'results'>
+								<option>05</option>
+								<option>10</option>
+								<option>15</option>
+								<option>20</option>
+								<option value = '-1'>All</option>
+							</select>
+							
+							<select v-model = 'picked'>
+								<option>Area</option>
+								<option>Category</option>
+								<option>Ingredient</option>
+								<option>Name</option>
+							</select>
+							
+							<select v-model = 'sortBy'>
+								<option>A->Z</option>
+								<option>Z->A</option>
+								<option>None</option>
+							</select>							
+						</b-card>
+					</b-collapse>
+				</div>
+			</div> <!-- end row -->
+
+			
+			
+			<div class = 'row'>
+				<div v-for = '(f, index) in food' v-if = 'index < results || results == -1' class = 'col-md-3'>
+					<span class = 'clickable' @click = "setIndex(f.idMeal)" v-b-modal = "'modal-' + f.idMeal">
+						<b-card class = 'mb-1'
+								border-variant = 'dark'
+								:title = 'f.strMeal || f.strDrink'
+
+								:img-src = 'f.strMealThumb || f.strDrinkThumb'
+								:img-alt = 'f.strMeal || f.strDrink'
+								img-top>
+							<div slot='footer'>
+								<small class = 'text-muted'>
+									<span v-text = 'f.strArea || f.strIBA'></span>
+									<span> - </span>
+									<span v-text = 'f.strCategory'></span>
+								</small>
+							</div>
+						</b-card>
+					</span>
+					<b-modal :id = "'modal-' + f.idMeal" 
+							 size = 'lg' 
+
+							 :title = 'f.strMeal' 
+							 header-bg-variant = 'dark'
+							 header-text-variant = 'light'
+							 busy
+							 >
+						<div>
+							<p><span>{{foodDisplay.area}} - {{foodDisplay.category}}</span></p>
+
+							<!--<div >
+								<b-img thumbnail :src = 'f.strMealThumb' fluid :alt = 'foodDisplay.name' width = 100%/>
+							</div>-->
+
+							<p>{{foodDisplay.history}}</p>
+							<ul v-for = 'i in foodDisplay.ingdnts'>
+								<li>{{i}}</li>
+							</ul>
+							<p>{{foodDisplay.recipe}}</p>
+						</div>
+						<div slot = 'modal-footer'>
+						</div>
+					</b-modal>
+				</div>
+			</div>
+		</div> <!-- end container -->	
+	</div> <!-- end #app -->
+	
+	<script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
+
+	<script src = 'https://cdn.jsdelivr.net/npm/vue/dist/vue.js'></script>
+	<script src = 'https://unpkg.com/babel-polyfill@latest/dist/polyfill.min.js'></script>
+	<script src = 'https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js'></script>
+	<script src = 'https://cdn.firebase.com/js/client/2.4.2/firebase.js'></script>
+	<script src = 'https://cdn.jsdelivr.net/vuefire/1.0.0/vuefire.min.js'></script>
+	
+	<script src = 'src/loader.js'></script>
+	<script src = 'src/main.js'></script>
+	<script src = 'src/vue_main.js'></script>
+	<script src = 'src/firebase.js'></script>
+	<script src = 'src/cooker.js'></script>
+	<script src = 'src/utilities.js'></script>
+	
+</body>
+</html>

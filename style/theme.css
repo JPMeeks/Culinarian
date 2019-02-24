@@ -1,0 +1,50 @@
+/* .myheader grabbed from Bootstrap's jumbotron example - https://getbootstrap.com/docs/4.0/examples/jumbotron/ */
+.myheader
+{
+	background-color: #e9ecef;
+	padding: 4rem 2rem;
+	margin-bottom:2rem;
+}
+
+input.form-control
+{
+	display: inline-block;
+	width: 20rem;
+	/*margin-right:1rem;*/
+}
+
+.input-group, #advOptions
+{
+	width: 80%;
+	margin: auto;
+}
+
+.search-row
+{
+	margin-bottom:3%;
+}
+
+/* Card style */
+b-card
+{
+	margin-bottom: 1%;
+}
+
+.clickable
+{
+	cursor: pointer;
+}
+
+a:link, a:hover, a:active
+{
+	text-decoration: none;
+	color: black;
+	cursor: pointer;
+}
+
+a:visited
+{
+	text-decoration: none;
+	color: darkslategray;
+}
+
